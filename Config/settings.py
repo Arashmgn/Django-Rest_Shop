@@ -5,9 +5,21 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = os.environ.get("SECRET_KEY")
-DEBUG = os.environ.get("DEBUG")
-ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+# SECRET_KEY = os.environ.get("SECRET_KEY")
+# DEBUG = os.environ.get("DEBUG")
+# ALLOWED_HOSTS = os.environ.get("ALLOWED_HOSTS", "").split(",")
+
+
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = 'vwj^eqhnw@q3!&)9kzhrqjrwlh6(xe^v%6^(lmgdk5a8n&ktp*'
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+ALLOWED_HOSTS = []
+
+
+
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -100,21 +112,26 @@ MEDIA_ROOT = BASE_DIR / 'media/'
 
 
 REST_FRAMEWORK={
-    'DEFAULT_PERMISSION_CLASSES':[
-        
-    ],
-    'DEFAULT_AUTHENTICATION_CLASSES':[
+    'DEFAULT_AUTHENTICATION_CLASSES':(
         'rest_framework.authentication.TokenAuthentication',
-    ]
+    )
 }
 
 
 AUTH_USER_MODEL = 'account.User'
 
 
-EMAIL_BACKEND = 'django.core.mail.backend.smtp.EmailBackend'
-EMAIL_HOST    = 'smtp.gmail.com'
-EMAIL_USE_TLS = True
-EMAIL_PORT    = 587
-# EMAIL_HOST_USER = 'EMAIL'
-# EMAIL_HOST_PASSWORD = 'PASSWORD'
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST    = 'smtp.gmail.com'
+# EMAIL_USE_TLS = True
+# EMAIL_PORT    = 587
+# EMAIL_HOST_USER = 'arash.m.gholinejad@gmail.com'
+# EMAIL_HOST_PASSWORD = '52171313mgn'
+
+EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
+EMAIL_HOST = 'localhost'
+EMAIL_PORT = 1025
+EMAIL_USE_TLS = False
+EMAIL_HOST_USER = ''
+EMAIL_HOST_PASSWORD = ''
+

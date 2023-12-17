@@ -9,7 +9,7 @@ services:
     volumes:
       - ./:/usr/src/app/
     ports:
-      - 8001:8000
+      - 8000:8000
     environment:
       - DEBUG=1
       - SECRET_KEY=0930jd30j9jd09j09j109fj01j9f

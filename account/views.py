@@ -47,7 +47,7 @@ class Register(APIView):
 
 
 @api_view(["GET",])
-@permission_classes(["IsAuthenticated"])
+@permission_classes([IsAuthenticated])
 def request_email_verification(request):
     user = request.user
     if user.is_email_verified:
@@ -60,10 +60,11 @@ def request_email_verification(request):
 
     except EmailOTP.DoesNotExist:
         email_otp = EmailOTP(user=user, email_verification_code=get_unique_code(user),)
+        email_otp.save()
     
 
     send_otp_via_email(user.email, email_otp.email_verification_code)
-    return Response({'message': 'email was sent to your email address'}, status=status.HTTP_200_ACCEPTED)
+    return Response({'message': 'email was sent to your email address'}, status=status.HTTP_202_ACCEPTED)
         
         
 
@@ -72,6 +73,9 @@ def request_email_verification(request):
 def verify_email(request,token):
     try:
         email_otp = EmailOTP.objects.get(email_verification_code=token)
+        if email_otp.user.is_email_verified:
+            return Response({'message': 'your email is already verified'}, status=status.HTTP_400_BAD_REQUEST)
+    
         if email_otp.is_expired():
             return Response({'message': 'expired OTP try getting a new OTP'}, status=status.HTTP_400_BAD_REQUEST)
         
@@ -85,3 +89,4 @@ def verify_email(request,token):
         return Response({'message': 'Invalid OTP'}, status=status.HTTP_400_BAD_REQUEST)
 
 
+ 

@@ -31,9 +31,9 @@ class User(AbstractUser):
     is_email_verified = models.BooleanField(default=False)
 
     is_staff = models.BooleanField(default=False, verbose_name='staff')
-    zip_code = models.IntegerField()
-    address  = models.TextField()
-    phone_no = models.IntegerField()
+    zip_code = models.IntegerField(blank=True, null=True)
+    address  = models.TextField(blank=True, null=True)
+    phone_no = models.IntegerField(blank=True, null=True)
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
@@ -54,10 +54,10 @@ class EmailOTP(models.Model):
     email_verification_code = models.CharField(max_length=255)
 
 
-    def is_expired(self):
+    def is_expired(self,):
         return self.expiration_date < timezone.now()
     
-    def return_date_time(self):
+    def return_date_time():
         now = timezone.now()
         return now + timezone.timedelta(days=7)
     

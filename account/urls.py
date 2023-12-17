@@ -8,9 +8,8 @@ urlpatterns = [
     path('register/', Register.as_view()),
     path('auth-token/', obtain_auth_token),
     path('revoke-token/', RevokeToken.as_view()),
-    path('verify-email/<slug:otp>', verify_email),
+    path('verify-email/<slug:token>/', verify_email),
     path('request-email-verification/',request_email_verification),
-    
 ]
  
  
