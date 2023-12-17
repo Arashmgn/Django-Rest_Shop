@@ -7,7 +7,6 @@ from .serializers import *
 from django.http import Http404
 from .models import *
 from .serializers import ProductSerializer
-# from rest_framework.parsers import JSONParser
 from rest_framework import status
 
 
@@ -92,10 +91,14 @@ def search(request):
         return Response({"products":[]})
 
 
-@api_view(['POST'])
+@api_view(['POST','GET'])
 def create_category(self, request, format = None):
-    serializer = CategorySerializer(data=request.data)
-    if serializer.is_valid():
-        serializer.save()
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        serializer = CategorySerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
